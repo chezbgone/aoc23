@@ -18,9 +18,9 @@ import Configuration.Dotenv qualified as Env
 import Network.HTTP.Simple (parseRequest, httpBS, getResponseBody, addRequestHeader)
 import Text.Megaparsec qualified as P
 
-import Day03 (parser, solutions) -- TODO: change these
+import Day04 (parser, solutions) -- TODO: change these
 aocDay :: Int
-aocDay = 3
+aocDay = 4
 
 class IsString a => Stringable a where
   toString :: a -> String
