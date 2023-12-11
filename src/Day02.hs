@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Day02 (solutions) where
+module Day02 (parse, solutions) where
 
 import Control.Applicative
 import Data.Functor
@@ -110,5 +110,5 @@ solveB games = sum
 showOutput :: Int -> Text
 showOutput = T.pack . show
 
-solutions :: [Text -> Text]
-solutions = map (\s -> showOutput . s . parse) [solveA, solveB]
+solutions :: [[Game] -> Text]
+solutions = map (showOutput .) [solveA, solveB]
