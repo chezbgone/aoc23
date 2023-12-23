@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PartialTypeSignatures #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 
 module Main where
 
@@ -9,7 +10,6 @@ import Data.Functor
 import Data.String ( IsString(..) )
 import Data.Text (Text)
 import Data.Text qualified as T
-import Data.Void (Void)
 import System.Directory (doesPathExist)
 import System.Environment qualified as Env
 import Text.Printf (printf)
@@ -18,9 +18,9 @@ import Configuration.Dotenv qualified as Env
 import Network.HTTP.Simple (parseRequest, httpBS, getResponseBody, addRequestHeader)
 import Text.Megaparsec qualified as P
 
-import Day05 (parser, solutions) -- TODO: change these
+import Day07 (parser, solutions) -- TODO: change these
 aocDay :: Int
-aocDay = 5
+aocDay = 7
 
 class IsString a => Stringable a where
   toString :: a -> String
@@ -40,11 +40,9 @@ getInput day = do
   response <- getResponseBody <$> httpBS request
   B.writeFile ("input/day" <> printf "%02d" day) response
 
-type Parser = P.Parsec Void Text
-
 parseSolve
-  :: Stringable b
-  => Parser a
+  :: (Ord e, P.ShowErrorComponent e, Stringable b)
+  => P.Parsec e Text a
   -> FilePath
   -> [a -> b]
   -> IO ()
@@ -54,6 +52,9 @@ parseSolve p file sols = do
     Left err      -> putStrLn $ P.errorBundlePretty err
     Right problem -> forM_ sols $ \sol ->
       putStrLn $ toString (sol problem)
+
+instance P.ShowErrorComponent Text where
+  showErrorComponent = T.unpack
 
 main :: IO ()
 main = do
