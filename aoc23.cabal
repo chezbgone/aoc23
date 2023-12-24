@@ -25,6 +25,7 @@ library
         Day05
         Day06
         Day07
+        Day08
     build-depends:
         base ^>=4.17.0.0,
         array ^>=0.5.4.0,
@@ -32,6 +33,7 @@ library
         hashable ^>=1.4.3.0,
         megaparsec ^>=9.6.1,
         mtl ^>=2.2.2,
+        nonempty-containers ^>=0.3.4.5,
         split ^>=0.2.4,
         text ^>=2.0.2,
         unordered-containers ^>=0.2.19.1,
